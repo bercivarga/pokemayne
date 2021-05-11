@@ -1,11 +1,11 @@
-import React from 'react';
-import logo from './logo.svg';
+import { AppProvider } from './store';
+import PokemonList from './components/PokemonList';
 
 function App() {
 	return (
-		<div className="flex justify-center items-center h-screen w-full">
-			<h1 className="text-4xl font-bold text-center block">Hello world!</h1>
-		</div>
+		<AppProvider>
+			<PokemonList />
+		</AppProvider>
 	);
 }
 
