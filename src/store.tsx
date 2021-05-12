@@ -11,22 +11,40 @@ export const getJSON = async (url: string) => {
 
 export function AppProvider({ children }: { children: ReactChild }): ReactElement {
 	const [ pokemon, setPokemon ] = useState<FetchedPokemonInterface[]>([]);
+	const [ prevPage, setPrevPage ] = useState<string>('');
+	const [ nextPage, setNextPage ] = useState<string>('');
 
 	useEffect(() => {
-		// add pagination with another useState() and a string argument in this function call
-		getPokemon();
+		getPokemon('https://pokeapi.co/api/v2/pokemon/');
 	}, []);
-	// see comment above
-	const getPokemon = async () => {
+
+	const getPokemon = async (url: string) => {
 		try {
-			const fetchResult = await getJSON('https://pokeapi.co/api/v2/pokemon/'); // not typed yet, needs to be looked into
+			const fetchResult = await getJSON(url); // not typed yet, needs to be looked into
 			setPokemon(fetchResult.results);
+			setPrevPage(fetchResult.previous);
+			setNextPage(fetchResult.next);
 		} catch (err) {
 			console.error(err);
 		}
 	};
 
-	return <AppContext.Provider value={{ pokemon }}>{children}</AppContext.Provider>;
+	// add an event listener that checks when all images loaded and only show the page after the pokemon are ready
+	const changePage = async (direction: string) => {
+		try {
+			if (!direction) return;
+			if (direction === 'prev') {
+				getPokemon(prevPage);
+			}
+			if (direction === 'next') {
+				getPokemon(nextPage);
+			}
+		} catch (err) {
+			console.error(err);
+		}
+	};
+
+	return <AppContext.Provider value={{ pokemon, changePage }}>{children}</AppContext.Provider>;
 }
 
 export const useGlobalContext = () => {
