@@ -3,23 +3,51 @@ export interface FetchedPokemonInterface {
 	url: string;
 }
 
+type MovesType = {
+	move: {
+		name: string;
+		url?: string;
+	};
+};
+
+type AbilitiesType = {
+	ability: {
+		name: string;
+		url?: string;
+	};
+};
+
+type FormsType = {
+	name: string;
+	url?: string;
+};
+
+type StatType = {
+	base_stat: number;
+	effort: number;
+	stat: {
+		name: string;
+		url?: string;
+	};
+};
+
 export interface IndividualPokemonInterface {
-	abilities: Object[];
+	abilities: AbilitiesType[];
 	base_experience: number;
-	forms: Object[];
+	forms: FormsType[];
 	game_indices: Object[];
 	height: number;
 	held_items: Array<any>;
 	id: number;
 	is_default: boolean;
 	location_area_encounters: string;
-	moves: Object[];
+	moves: MovesType[];
 	name: string;
 	order: number;
 	past_types: Array<any>;
 	species: { name: string; url: string };
 	sprites: { front_default: string };
-	stats: Object[];
+	stats: StatType[];
 	types: Object[];
 	weight: number;
 }
