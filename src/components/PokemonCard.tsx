@@ -28,15 +28,25 @@ export default function PokemonCard(props: { url: string }): JSX.Element {
 		<button
 			type="button"
 			onClick={() => toggleModal()}
-			className="mr-4 mb-4 bg-gray-100 hover:bg-gray-200 inline-block p-4 rounded-lg cursor-pointer"
+			className="h-full w-full mr-4 mb-4 bg-gray-100 hover:bg-gray-200 inline-block p-4 rounded-lg cursor-pointer"
 		>
 			{showModal && <PokemonModal {...pokeData as any} />}
 			{/******************** fix any type ********************/}
-			<div className="flex flex-row items-center">
-				<img src={pokeData && pokeData.sprites.front_default} alt={pokeData && pokeData.name} />
+			<div className="flex flex-row items-center justify-center">
+				<div className="w-24 h-24">
+					<img
+						className="object-contain h-full w-full"
+						src={pokeData && pokeData.sprites.front_default}
+						alt={pokeData && pokeData.name}
+					/>
+				</div>
 				<div>
 					<p className="font-bold text-lg">
-						{pokeData && pokeData.name.replace(pokeData.name[0], pokeData.name[0].toUpperCase())}
+						{pokeData ? (
+							pokeData.name.replace(pokeData.name[0], pokeData.name[0].toUpperCase())
+						) : (
+							<p className="h-6" />
+						)}
 					</p>
 					<p>Height: {pokeData && pokeData.height}</p>
 					<p>Base EXP: {pokeData && pokeData.base_experience}</p>

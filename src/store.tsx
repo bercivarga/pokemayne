@@ -44,7 +44,7 @@ export function AppProvider({ children }: { children: ReactChild }): ReactElemen
 		}
 	};
 
-	return <AppContext.Provider value={{ pokemon, changePage }}>{children}</AppContext.Provider>;
+	return <AppContext.Provider value={{ pokemon, changePage, prevPage, nextPage }}>{children}</AppContext.Provider>;
 }
 
 export const useGlobalContext = () => {
