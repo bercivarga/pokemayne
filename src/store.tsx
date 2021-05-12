@@ -34,10 +34,10 @@ export function AppProvider({ children }: { children: ReactChild }): ReactElemen
 		try {
 			if (!direction) return;
 			if (direction === 'prev') {
-				getPokemon(prevPage);
+				prevPage && getPokemon(prevPage);
 			}
 			if (direction === 'next') {
-				getPokemon(nextPage);
+				nextPage && getPokemon(nextPage);
 			}
 		} catch (err) {
 			console.error(err);
