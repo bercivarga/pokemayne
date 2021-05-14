@@ -1,13 +1,15 @@
 import { useState, useEffect, useCallback } from 'react';
-import { getJSON } from '../store';
 import { IndividualPokemonInterface } from '../interfaces';
 import PokemonModal from './PokemonModal';
+import { useGlobalContext } from '../store';
 
 export default function PokemonCard(props: { url: string }): JSX.Element {
 	const [ pokeData, setPokeData ] = useState<IndividualPokemonInterface>();
 	const [ showModal, setShowModal ] = useState<boolean>(false);
 
 	const { url }: { url: string } = props;
+
+	const { getJSON } = useGlobalContext();
 
 	const toggleModal = useCallback(
 		(): void => {
@@ -24,7 +26,7 @@ export default function PokemonCard(props: { url: string }): JSX.Element {
 			};
 			getIndividualPokemon();
 		},
-		[ url ]
+		[ url, getJSON ]
 	);
 
 	return (

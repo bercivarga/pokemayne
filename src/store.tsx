@@ -1,23 +1,29 @@
 import React, { useContext, useState, useEffect, ReactElement, ReactChild } from 'react';
-import { FetchedPokemonInterface, IndividualPokemonInterface } from './interfaces';
+import { FetchedPokemonInterface } from './interfaces';
 
 export const AppContext = React.createContext<any>(null); // type any is temporary until I make the correct interface
-
-export const getJSON = async (url: string) => {
-	const res = await fetch(url);
-	const data = await res.json();
-	return data;
-};
 
 export function AppProvider({ children }: { children: ReactChild }): ReactElement {
 	const [ pokemon, setPokemon ] = useState<FetchedPokemonInterface[]>([]);
 	const [ prevPage, setPrevPage ] = useState<string>('');
 	const [ nextPage, setNextPage ] = useState<string>('');
-	const [ searchedPokemon, setSearchedPokemon ] = useState<IndividualPokemonInterface | undefined>(undefined);
+	const [ searchedPokemon, setSearchedPokemon ] = useState<string | undefined>(undefined);
+	const [ failedFetch, setFailedFetch ] = useState<boolean>(false);
 
 	useEffect(() => {
 		getPokemon('https://pokeapi.co/api/v2/pokemon/');
 	}, []);
+
+	const getJSON = async (url: string) => {
+		setFailedFetch(false);
+		const res = await fetch(url);
+		if (!res.ok) {
+			setFailedFetch(true);
+			return;
+		}
+		const data = await res.json();
+		return data;
+	};
 
 	const getPokemon = async (url: string) => {
 		try {
@@ -46,16 +52,18 @@ export function AppProvider({ children }: { children: ReactChild }): ReactElemen
 	};
 
 	const searchPokemon = async (pokemon: string) => {
-		if (!pokemon) return;
-		const searchedPokemon: IndividualPokemonInterface = await getJSON(
-			`https://pokeapi.co/api/v2/pokemon/${pokemon}`
-		);
-		setSearchedPokemon(searchedPokemon);
-		console.log(searchedPokemon);
+		if (pokemon === '') {
+			getPokemon('https://pokeapi.co/api/v2/pokemon/');
+			setSearchedPokemon('');
+			return;
+		}
+		setSearchedPokemon(pokemon);
 	};
 
 	return (
-		<AppContext.Provider value={{ pokemon, changePage, prevPage, nextPage, searchPokemon, searchedPokemon }}>
+		<AppContext.Provider
+			value={{ getJSON, failedFetch, pokemon, changePage, prevPage, nextPage, searchPokemon, searchedPokemon }}
+		>
 			{children}
 		</AppContext.Provider>
 	);

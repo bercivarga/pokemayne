@@ -8,14 +8,13 @@ export default function SearchBar() {
 
 	const sendSearch = (e: React.FormEvent) => {
 		e.preventDefault();
-		if (!input) return;
 		searchPokemon(input);
 	};
 
 	return (
-		<form onSubmit={(e) => sendSearch(e)} className="border-black border-4 rounded-sm">
+		<form onSubmit={(e) => sendSearch(e)}>
 			<input
-				className="px-2"
+				className="px-2 border-black border-4 rounded-sm"
 				type="text"
 				value={input}
 				onChange={(e) => setInput(e.target.value)}

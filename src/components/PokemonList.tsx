@@ -1,19 +1,37 @@
+import { useMemo } from 'react';
 import { FetchedPokemonInterface } from '../interfaces';
 import { useGlobalContext } from '../store';
 import PokemonCard from './PokemonCard';
 import SearchBar from './SearchBar';
+import ErrorMessage from './ErrorMessage';
 
 export default function PokemonList() {
-	const { pokemon, changePage, prevPage, nextPage } = useGlobalContext();
+	const { pokemon, changePage, prevPage, nextPage, searchedPokemon, failedFetch } = useGlobalContext();
+
+	const MemoizedGrid = useMemo(
+		() => {
+			return (
+				<div className="mt-8 grid gap-4 grid-cols-1 md:grid-cols-3 2xl:grid-cols-5">
+					{searchedPokemon ? (
+						<PokemonCard url={`https://pokeapi.co/api/v2/pokemon/${searchedPokemon}`} />
+					) : (
+						pokemon.map((p: FetchedPokemonInterface) => <PokemonCard key={p.name} url={p.url} />)
+					)}
+				</div>
+			);
+		},
+		[ searchedPokemon, pokemon ]
+	);
+
 	return (
 		<div className="px-64 py-12">
 			<div className="flex flex-col lg:flex-row justify-between lg:items-center">
-				<h1 className="font-bold text-5xl">Pokemayne &ndash; Gotta catch 'em all!</h1>
+				<h1 className="font-bold text-5xl">
+					P<span className="text-red-600">o</span>kemayne &ndash; Gotta catch 'em all!
+				</h1>
 				<SearchBar />
 			</div>
-			<div className="mt-8 grid gap-4 grid-cols-1 md:grid-cols-3 2xl:grid-cols-5">
-				{pokemon.map((p: FetchedPokemonInterface) => <PokemonCard key={p.name} url={p.url} />)}
-			</div>
+			{failedFetch ? <ErrorMessage /> : MemoizedGrid}
 			<div className="mt-4 flex flex-row justify-between">
 				<button
 					type="button"
