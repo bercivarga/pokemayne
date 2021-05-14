@@ -8,7 +8,8 @@ export default function SearchBar() {
 
 	const sendSearch = (e: React.FormEvent) => {
 		e.preventDefault();
-		searchPokemon(input);
+		const lowerCaseInput: string = input.toLowerCase();
+		searchPokemon(lowerCaseInput);
 	};
 
 	return (

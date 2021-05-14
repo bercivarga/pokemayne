@@ -26,27 +26,30 @@ export default function PokemonModal({
 	if (!pokeData) return <h1>Something went wrong.</h1>;
 
 	return (
-		<div className="w-screen h-screen p-12 fixed inset-0 bg-gray-100 grid grid-cols-1 md:grid-cols-3 items-center z-10">
+		<div className="w-screen h-screen px-6 py-8 md:p-12 fixed inset-0 bg-gray-100 grid grid-cols-1 md:grid-cols-3 items-center z-10">
 			<button
 				onClick={() => toggleModal()}
-				className="absolute top-12 right-12 rounded-full p-4 bg-gray-100 border-black border-2 leading-3"
+				className="absolute top-2 md:top-6 right-2 md:right-6 rounded-full p-4 md:p-8 text-lg md:text-2xl bg-gray-100 hover:bg-gray-300 border-black border-2 leading-3 md:leading-4"
 			>
 				X
 			</button>
 			<div className="flex flex-col justify-center items-center col-span-1">
-				<img
-					className="w-72"
-					src={pokeData.sprites.front_default}
-					alt={pokeData.name.replace(pokeData.name[0], pokeData.name[0].toUpperCase())}
-				/>
+				<div className="w-72 h-72 relative">
+					<div className="w-full h-full absolute bottom-4 rounded-full bg-gray-200" />
+					<img
+						className="w-full h-full object-contain relative"
+						src={pokeData.sprites.front_default}
+						alt={pokeData.name.replace(pokeData.name[0], pokeData.name[0].toUpperCase())}
+					/>
+				</div>
 				<p className="font-bold text-2xl">
 					{pokeData.name.replace(pokeData.name[0], pokeData.name[0].toUpperCase())}
 				</p>
 				<p>Base EXP: {pokeData.base_experience}</p>
 				<p>Weight: {pokeData.weight}</p>
 			</div>
-			<div className="text-left col-span-2">
-				<div>
+			<div className="mt-8 md:mt-0 h-full text-left col-span-2 overflow-scroll">
+				<div className="p-4 bg-white border-black border-2">
 					<p className="font-bold text-xl">Forms</p>
 					<div className="mt-2">
 						{pokeData.forms.map((f) => {
@@ -54,7 +57,7 @@ export default function PokemonModal({
 						})}
 					</div>
 				</div>
-				<div className="mt-4">
+				<div className="mt-4 p-4 bg-white border-black border-2">
 					<p className="font-bold text-xl">Stats</p>
 					<div className="mt-2 grid grid-cols-1 md:grid-cols-3">
 						{pokeData.stats.map((s) => {
@@ -69,7 +72,7 @@ export default function PokemonModal({
 						})}
 					</div>
 				</div>
-				<div className="mt-4">
+				<div className="mt-4 p-4 bg-white border-black border-2">
 					<p className="font-bold text-xl">Abilities</p>
 					<div className="mt-2 grid grid-cols-2 md:grid-cols-6">
 						{pokeData.abilities.map((a) => {
@@ -81,7 +84,7 @@ export default function PokemonModal({
 						})}
 					</div>
 				</div>
-				<div className="mt-4">
+				<div className="mt-4 p-4 bg-white border-black border-2">
 					<p className="font-bold text-xl">Moves</p>
 					<div className="mt-2 grid grid-cols-2 md:grid-cols-6">
 						{pokeData.moves.map((m) => {

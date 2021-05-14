@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { IndividualPokemonInterface } from '../interfaces';
 import PokemonModal from './PokemonModal';
 import { useGlobalContext } from '../store';
@@ -28,6 +28,9 @@ export default function PokemonCard(props: { url: string }): JSX.Element {
 		},
 		[ url, getJSON ]
 	);
+
+	// check if this is an appropriate solution for similar problems
+	if (!pokeData) return <React.Fragment />;
 
 	return (
 		<div>

@@ -52,6 +52,7 @@ export function AppProvider({ children }: { children: ReactChild }): ReactElemen
 	};
 
 	const searchPokemon = async (pokemon: string) => {
+		setFailedFetch(false);
 		if (pokemon === '') {
 			getPokemon('https://pokeapi.co/api/v2/pokemon/');
 			setSearchedPokemon('');
