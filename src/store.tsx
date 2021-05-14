@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect, ReactElement, ReactChild } from 'react';
-import { FetchedPokemonInterface } from './interfaces';
+import { FetchedPokemonInterface, IndividualPokemonInterface } from './interfaces';
 
 export const AppContext = React.createContext<any>(null); // type any is temporary until I make the correct interface
 
@@ -13,6 +13,7 @@ export function AppProvider({ children }: { children: ReactChild }): ReactElemen
 	const [ pokemon, setPokemon ] = useState<FetchedPokemonInterface[]>([]);
 	const [ prevPage, setPrevPage ] = useState<string>('');
 	const [ nextPage, setNextPage ] = useState<string>('');
+	const [ searchedPokemon, setSearchedPokemon ] = useState<IndividualPokemonInterface | undefined>(undefined);
 
 	useEffect(() => {
 		getPokemon('https://pokeapi.co/api/v2/pokemon/');
@@ -44,7 +45,20 @@ export function AppProvider({ children }: { children: ReactChild }): ReactElemen
 		}
 	};
 
-	return <AppContext.Provider value={{ pokemon, changePage, prevPage, nextPage }}>{children}</AppContext.Provider>;
+	const searchPokemon = async (pokemon: string) => {
+		if (!pokemon) return;
+		const searchedPokemon: IndividualPokemonInterface = await getJSON(
+			`https://pokeapi.co/api/v2/pokemon/${pokemon}`
+		);
+		setSearchedPokemon(searchedPokemon);
+		console.log(searchedPokemon);
+	};
+
+	return (
+		<AppContext.Provider value={{ pokemon, changePage, prevPage, nextPage, searchPokemon, searchedPokemon }}>
+			{children}
+		</AppContext.Provider>
+	);
 }
 
 export const useGlobalContext = () => {
