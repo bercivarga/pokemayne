@@ -23,10 +23,14 @@ export default function PokemonList() {
 		[ searchedPokemon, pokemon ]
 	);
 
+	const logoReset = () => {
+		return prevPage ? searchPokemon('') : null;
+	};
+
 	return (
 		<div className="px-4 lg:px-48 py-8 lg:py-12">
 			<div className="flex flex-col sm:flex-row sm:justify-between sm:items-center">
-				<button onClick={() => searchPokemon('')} className="text-left">
+				<button onClick={() => logoReset()} className="text-left">
 					<h1 className="font-bold text-5xl">
 						P<span className="text-red-600">o</span>kemayne
 					</h1>

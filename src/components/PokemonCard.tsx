@@ -30,7 +30,6 @@ export default function PokemonCard(props: { url: string }): JSX.Element {
 	);
 
 	// check if this is an appropriate solution for similar problems
-	if (!pokeData) return <React.Fragment />;
 
 	return (
 		<div>
