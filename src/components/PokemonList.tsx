@@ -6,12 +6,12 @@ import SearchBar from './SearchBar';
 import ErrorMessage from './ErrorMessage';
 
 export default function PokemonList() {
-	const { pokemon, changePage, prevPage, nextPage, searchedPokemon, failedFetch } = useGlobalContext();
+	const { pokemon, changePage, prevPage, nextPage, searchedPokemon, failedFetch, searchPokemon } = useGlobalContext();
 
 	const MemoizedGrid = useMemo(
 		() => {
 			return (
-				<div className="mt-8 grid gap-4 grid-cols-1 md:grid-cols-3 2xl:grid-cols-5">
+				<div className="mt-8 grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
 					{searchedPokemon ? (
 						<PokemonCard url={`https://pokeapi.co/api/v2/pokemon/${searchedPokemon}`} />
 					) : (
@@ -24,11 +24,13 @@ export default function PokemonList() {
 	);
 
 	return (
-		<div className="px-4 lg:px-64 py-8 lg:py-12">
-			<div className="flex flex-col lg:flex-row justify-between lg:items-center">
-				<h1 className="font-bold text-5xl">
-					P<span className="text-red-600">o</span>kemayne &ndash; Gotta catch 'em all!
-				</h1>
+		<div className="px-4 lg:px-48 py-8 lg:py-12">
+			<div className="flex flex-col sm:flex-row sm:justify-between sm:items-center">
+				<button onClick={() => searchPokemon('')} className="text-left">
+					<h1 className="font-bold text-5xl">
+						P<span className="text-red-600">o</span>kemayne
+					</h1>
+				</button>
 				<SearchBar />
 			</div>
 			{failedFetch ? <ErrorMessage /> : MemoizedGrid}
