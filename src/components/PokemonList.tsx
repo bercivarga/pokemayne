@@ -1,14 +1,14 @@
-import { useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { FetchedPokemonInterface } from '../interfaces';
 import { useGlobalContext } from '../store';
 import PokemonCard from './PokemonCard';
 import SearchBar from './SearchBar';
 import ErrorMessage from './ErrorMessage';
 
-export default function PokemonList() {
+export default function PokemonList(): JSX.Element {
 	const { pokemon, changePage, prevPage, nextPage, searchedPokemon, failedFetch, searchPokemon } = useGlobalContext();
 
-	const MemoizedGrid = useMemo(
+	const memoizedGrid = useMemo(
 		() => {
 			return (
 				<div className="mt-8 grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
@@ -46,7 +46,7 @@ export default function PokemonList() {
 				</button>
 				<SearchBar />
 			</div>
-			{failedFetch ? <ErrorMessage /> : MemoizedGrid}
+			{failedFetch ? <ErrorMessage /> : memoizedGrid}
 			{!searchedPokemon && (
 				<div className="mt-4 flex flex-row justify-between">
 					<button

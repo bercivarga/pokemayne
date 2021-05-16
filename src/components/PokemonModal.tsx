@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { IndividualPokemonInterface } from '../interfaces';
 
 type PropFunctionType = () => void;
@@ -26,10 +26,10 @@ export default function PokemonModal({
 	if (!pokeData) return <h1>Something went wrong.</h1>;
 
 	return (
-		<div className="w-screen h-screen px-6 py-8 md:p-12 fixed inset-0 bg-gray-100 grid grid-cols-1 md:grid-cols-3 items-center z-10">
+		<div className="w-screen h-screen px-6 py-8 md:p-12 fixed inset-0 bg-gray-100 grid grid-cols-1 md:grid-cols-3 items-center content-center z-10">
 			<button
 				onClick={() => toggleModal()}
-				className="absolute top-2 md:top-6 right-2 md:right-6 rounded-full p-4 md:p-8 text-lg md:text-2xl bg-gray-100 hover:bg-gray-300 border-black border-2 leading-3 md:leading-4"
+				className="z-10 absolute top-4 sm:top-6 right-4 sm:right-6 rounded-full p-4 md:p-8 text-lg md:text-2xl bg-red-500 hover:bg-red-700 text-white leading-3 md:leading-4"
 			>
 				X
 			</button>
@@ -59,7 +59,7 @@ export default function PokemonModal({
 				</div>
 				<div className="mt-4 p-4 bg-white border-black border-2">
 					<p className="font-bold text-xl">Stats</p>
-					<div className="mt-2 grid grid-cols-1 md:grid-cols-3">
+					<div className="mt-2 grid grid-cols-2 md:grid-cols-3">
 						{pokeData.stats.map((s) => {
 							return (
 								<div key={s.stat.name}>
@@ -74,7 +74,7 @@ export default function PokemonModal({
 				</div>
 				<div className="mt-4 p-4 bg-white border-black border-2">
 					<p className="font-bold text-xl">Abilities</p>
-					<div className="mt-2 grid grid-cols-2 md:grid-cols-6">
+					<div className="mt-2 grid grid-cols-3 md:grid-cols-6">
 						{pokeData.abilities.map((a) => {
 							return (
 								<span key={a.ability.name}>

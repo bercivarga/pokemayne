@@ -1,6 +1,7 @@
+import React from 'react';
 import { FiAlertCircle } from 'react-icons/fi';
 
-export default function ErrorMessage() {
+export default function ErrorMessage(): JSX.Element {
 	return (
 		<div className="flex flex-row items-center mt-8 p-12 border-red-600 border-8 rounded-lg">
 			<FiAlertCircle className="text-red-600 w-8 h-8" />

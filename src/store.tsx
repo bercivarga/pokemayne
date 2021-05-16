@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect, ReactElement, ReactChild } from 'react';
+import React, { useContext, useState, useEffect, useCallback, ReactElement, ReactChild } from 'react';
 import { FetchedPokemonInterface } from './interfaces';
 
 export const AppContext = React.createContext<any>(null); // type any is temporary until I make the correct interface
@@ -10,9 +10,23 @@ export function AppProvider({ children }: { children: ReactChild }): ReactElemen
 	const [ searchedPokemon, setSearchedPokemon ] = useState<string | undefined>(undefined);
 	const [ failedFetch, setFailedFetch ] = useState<boolean>(false);
 
-	useEffect(() => {
-		getPokemon('https://pokeapi.co/api/v2/pokemon/');
+	const getPokemon = useCallback(async (url: string) => {
+		try {
+			const fetchResult = await getJSON(url); // not typed yet, needs to be looked into
+			setPokemon(fetchResult.results);
+			setPrevPage(fetchResult.previous);
+			setNextPage(fetchResult.next);
+		} catch (err) {
+			console.error(err);
+		}
 	}, []);
+
+	useEffect(
+		() => {
+			getPokemon('https://pokeapi.co/api/v2/pokemon/');
+		},
+		[ getPokemon ]
+	);
 
 	const getJSON = async (url: string) => {
 		setFailedFetch(false);
@@ -23,17 +37,6 @@ export function AppProvider({ children }: { children: ReactChild }): ReactElemen
 		}
 		const data = await res.json();
 		return data;
-	};
-
-	const getPokemon = async (url: string) => {
-		try {
-			const fetchResult = await getJSON(url); // not typed yet, needs to be looked into
-			setPokemon(fetchResult.results);
-			setPrevPage(fetchResult.previous);
-			setNextPage(fetchResult.next);
-		} catch (err) {
-			console.error(err);
-		}
 	};
 
 	// add an event listener that checks when all images loaded and only show the page after the pokemon are ready
@@ -70,6 +73,6 @@ export function AppProvider({ children }: { children: ReactChild }): ReactElemen
 	);
 }
 
-export const useGlobalContext = () => {
+export const useGlobalContext = (): any => {
 	return useContext(AppContext);
 };

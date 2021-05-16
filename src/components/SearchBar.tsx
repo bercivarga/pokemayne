@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect, MutableRefObject } from 'react';
 import { useGlobalContext } from '../store';
 import { HiOutlineSearchCircle } from 'react-icons/hi';
 
-export default function SearchBar() {
+export default function SearchBar(): JSX.Element {
 	const [ input, setInput ] = useState<string>('');
 	const [ showInput, setShowInput ] = useState<boolean>(false);
 
@@ -36,7 +36,7 @@ export default function SearchBar() {
 		<form onSubmit={(e) => sendSearch(e)} className="mt-8 sm:mt-0">
 			<input
 				ref={inputRef}
-				className="px-2 border-black border-4 rounded-sm"
+				className="h-10 px-2 border-black border-4 rounded-sm"
 				type="text"
 				value={input}
 				onChange={(e) => setInput(e.target.value)}
