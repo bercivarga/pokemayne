@@ -27,6 +27,15 @@ export default function PokemonList() {
 		return prevPage ? searchPokemon('') : null;
 	};
 
+	const changePageHandler = (dir: string) => {
+		changePage(dir);
+		window.scroll({
+			top: 0,
+			left: 0,
+			behavior: 'smooth'
+		});
+	};
+
 	return (
 		<div className="px-4 lg:px-48 py-8 lg:py-12">
 			<div className="flex flex-col sm:flex-row sm:justify-between sm:items-center">
@@ -42,16 +51,16 @@ export default function PokemonList() {
 				<div className="mt-4 flex flex-row justify-between">
 					<button
 						type="button"
-						onClick={() => changePage('prev')}
-						className="p-6 bg-gray-300 rounded-lg text-2xl font-bold hover:bg-gray-400 disabled:opacity-50 disabled:bg-gray-300 disabled:cursor-not-allowed"
+						onClick={() => changePageHandler('prev')}
+						className="p-4 sm:p-6 bg-gray-300 rounded-lg text-2xl font-bold hover:bg-gray-400 disabled:opacity-50 disabled:bg-gray-300 disabled:cursor-not-allowed"
 						disabled={prevPage ? false : true}
 					>
 						Previous page
 					</button>
 					<button
 						type="button"
-						onClick={() => changePage('next')}
-						className="p-6 bg-gray-300 rounded-lg text-2xl font-bold hover:bg-gray-400 disabled:opacity-50 disabled:bg-gray-300 disabled:cursor-not-allowed"
+						onClick={() => changePageHandler('next')}
+						className="p-4 sm:p-6 bg-gray-300 rounded-lg text-2xl font-bold hover:bg-gray-400 disabled:opacity-50 disabled:bg-gray-300 disabled:cursor-not-allowed"
 						disabled={nextPage ? false : true}
 					>
 						Next page
