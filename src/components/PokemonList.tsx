@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useCallback } from 'react';
 import { FetchedPokemonInterface } from '../interfaces';
 import { useGlobalContext } from '../store';
 import PokemonCard from './PokemonCard';
@@ -23,9 +23,12 @@ export default function PokemonList(): JSX.Element {
 		[ searchedPokemon, pokemon ]
 	);
 
-	const logoReset = () => {
-		searchPokemon('');
-	};
+	const logoReset = useCallback(
+		() => {
+			searchPokemon('');
+		},
+		[ searchPokemon ]
+	);
 
 	const changePageHandler = (dir: string) => {
 		changePage(dir);
