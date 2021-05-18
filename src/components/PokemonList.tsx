@@ -24,7 +24,7 @@ export default function PokemonList(): JSX.Element {
 	);
 
 	const logoReset = () => {
-		return prevPage ? searchPokemon('') : null;
+		searchPokemon('');
 	};
 
 	const changePageHandler = (dir: string) => {
